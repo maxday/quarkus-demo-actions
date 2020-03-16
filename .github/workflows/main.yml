@@ -7,15 +7,13 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@master
-      - name: Run ls
-        run: ls
-      - name: Run ls 2
-        run: ls ..
-      - name: Build native executable
+      - name: Build native executable and upload it as an artifact
         run: |
           docker build . --file Dockerfile -t binary-image
           id=$(docker create binary-image)
-          docker cp $id:/usr/src/app/target/*-runner application-runner
+          version=$(grep --max-count=1 '<version>' pom.xml | awk -F '>' '{ print $2 }' | awk -F '<' '{ print $1 }')
+          artifactId=$(grep --max-count=1 '<artifactId>' pom.xml | awk -F '>' '{ print $2 }' | awk -F '<' '{ print $1 }')
+          docker cp $id:/usr/src/app/target/${artifactId}-${version}-runner application-runner
       - name: Upload binary app
         uses: actions/upload-artifact@v1
         with:
