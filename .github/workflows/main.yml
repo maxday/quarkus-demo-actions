@@ -5,5 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Build native Quarkus app
     steps:
+      - name: Checkout the code
+        uses: actions/checkout@master
+      - name: Run ls
+        run: ls
+      - name: Run ls 2
+        run: ls ..
       - name: Build native executable
         run: docker build . --file Dockerfile
