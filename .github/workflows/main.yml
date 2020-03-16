@@ -8,7 +8,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@master
       - name: Build native executable and upload it as an artifact
-        uses: maxday/quarkus-native-build-docker-action
+        uses: maxday/quarkus-native-build-docker-action@master
       - name: Extract
         run: |
           id=$(docker create native-build-image)
