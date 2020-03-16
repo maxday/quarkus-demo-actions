@@ -34,3 +34,9 @@ jobs:
       - name: Dockerize
         run: |
           docker build . --file docker/dockerize/Dockerfile -t maxday/url-shortener
+      - name: Login to DockerHub registry
+        run: |
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Push docker image
+        run: |
+          docker push . --file docker/dockerize/Dockerfile -t maxday/url-shortener
