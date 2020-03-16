@@ -8,8 +8,9 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@master
       - name: Build native executable and upload it as an artifact
+        uses: maxday/quarkus-native-build-docker-action
+      - name: Extract
         run: |
-          docker build . --file docker/native_build/Dockerfile -t native-build-image
           id=$(docker create native-build-image)
           docker cp $id:/usr/src/app/target/app-runner app-runner
       - name: Upload native executable
