@@ -29,5 +29,6 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: application-runner
+      - name: Dockerize
         run: |
           docker build . --file docker/dockerize/Dockerfile -t maxday/url-shortener
