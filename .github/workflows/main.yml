@@ -33,7 +33,6 @@ jobs:
           name: application-runner
       - name: Dockerize
         run: |
-          chmod 755 application-runner
           docker build . --file docker/dockerize/Dockerfile -t maxday/url-shortener
       - name: Login to DockerHub registry
         run: |
