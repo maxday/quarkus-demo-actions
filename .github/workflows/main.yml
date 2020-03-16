@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
+      - uses: actions/checkout@master
       - name: Build native executable
         id: native-build
         uses: maxday/quarkus-native-build-docker-action@8b2e3877c804a05a99eb1adaa38852b5f527286e
