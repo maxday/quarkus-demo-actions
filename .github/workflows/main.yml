@@ -34,7 +34,7 @@ jobs:
       - name: Dockerize
         run: |
           ls -la
-          chmod u+x application-runner
+          chmod u+x application-runner/application-runner
           docker build . --file docker/dockerize/Dockerfile -t maxday/url-shortener
       - name: Login to DockerHub registry
         run: |
