@@ -39,4 +39,4 @@ jobs:
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push docker image
         run: |
-          docker push . --file docker/dockerize/Dockerfile -t maxday/url-shortener
+          docker push maxday/url-shortener
