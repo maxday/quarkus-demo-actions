@@ -1,29 +1,11 @@
 on: [push]
 
 jobs:
-  native_build:
-    runs-on: ubuntu-latest
-    name: Build native Quarkus app
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@master
-      - name: Build native executable and upload it as an artifact
-        run: |
-          docker build . --file docker/native_build/Dockerfile -t binary-image
-          id=$(docker create binary-image)
-          version=$(grep --max-count=1 '<version>' pom.xml | awk -F '>' '{ print $2 }' | awk -F '<' '{ print $1 }')
-          artifactId=$(grep --max-count=1 '<artifactId>' pom.xml | awk -F '>' '{ print $2 }' | awk -F '<' '{ print $1 }')
-          docker cp $id:/usr/src/app/target/${artifactId}-${version}-runner application-runner
-      - name: Upload binary app
-        uses: actions/upload-artifact@v1
-        with:
-          name: application-runner
-          path: application-runner
+
 
   dockerize:
     runs-on: ubuntu-latest
     name: Put the native app in a Docker container
-    needs: native_build
     steps:
       - name: Checkout the code
         uses: actions/checkout@master
@@ -33,7 +15,7 @@ jobs:
           name: application-runner
       - name: Dockerize
         run: |
-          chmod 755 application-runner
+          chmod u+x application-runner
           docker build . --file docker/dockerize/Dockerfile -t maxday/url-shortener
       - name: Login to DockerHub registry
         run: |
