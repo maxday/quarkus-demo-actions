@@ -9,20 +9,18 @@ jobs:
         uses: actions/checkout@master
       - name: Build native executable and upload it as an artifact
         run: |
-          docker build . --file docker/native_build/Dockerfile -t binary-image
-          id=$(docker create binary-image)
-          version=$(grep --max-count=1 '<version>' pom.xml | awk -F '>' '{ print $2 }' | awk -F '<' '{ print $1 }')
-          artifactId=$(grep --max-count=1 '<artifactId>' pom.xml | awk -F '>' '{ print $2 }' | awk -F '<' '{ print $1 }')
-          docker cp $id:/usr/src/app/target/${artifactId}-${version}-runner application-runner
-      - name: Upload binary app
+          docker build . --file docker/native_build/Dockerfile -t native-build-image
+          id=$(docker create native-build-image)
+          docker cp $id:/usr/src/app/target/app-runner app-runner
+      - name: Upload native executable
         uses: actions/upload-artifact@v1
         with:
-          name: application-runner
-          path: application-runner
+          name: native-executable
+          path: app-runner
 
   dockerize:
     runs-on: ubuntu-latest
-    name: Put the native app in a Docker container
+    name: Embed the native executable in a Docker container
     needs: native_build
     steps:
       - name: Checkout the code
@@ -30,10 +28,10 @@ jobs:
       - name: Download the binary
         uses: actions/download-artifact@v1
         with:
-          name: application-runner
+          name: native-executable
       - name: Dockerize
         run: |
-          chmod u+x application-runner/application-runner
+          chmod u+x native-executable/app-runner
           docker build . --file docker/dockerize/Dockerfile -t maxday/url-shortener
       - name: Login to DockerHub registry
         run: |
