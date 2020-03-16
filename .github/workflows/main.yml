@@ -12,9 +12,10 @@ jobs:
       - name: Run ls 2
         run: ls ..
       - name: Build native executable
-        run: docker build . --file Dockerfile -t binary-image
-        run: id=$(docker create binary-image)
-        run: docker cp $id:/usr/src/app/target/*-runner application-runner
+        run:
+          - docker build . --file Dockerfile -t binary-image
+          - id=$(docker create binary-image)
+          - docker cp $id:/usr/src/app/target/*-runner application-runner
       - name: Upload binary app
         uses: actions/upload-artifact@v1
         with:
