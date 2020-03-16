@@ -8,4 +8,4 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@master
       - name: Build native executable
-        uses: maxday/quarkus-native-build-docker-action@8b2e3877c804a05a99eb1adaa38852b5f527286e
+        uses: maxday/quarkus-native-build-docker-action@master
