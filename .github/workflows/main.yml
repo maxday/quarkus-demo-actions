@@ -25,6 +25,8 @@ jobs:
     name: Put the native app in a Docker container
     needs: native_build
     steps:
+      - name: Checkout the code
+          uses: actions/checkout@master
       - name: Download the binary
         uses: actions/download-artifact@v1
         with:
