@@ -5,8 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
-      # To use this repository's private action, you must check out the repository
-      - name: Checkout
-        uses: actions/checkout@8b2e3877c804a05a99eb1adaa38852b5f527286e
-      - name: Build Quarkus native image
-        uses: ./ # Uses an action in the root directory
+      - name: Build native executable
+      id: native-build
+      uses: maxday/quarkus-native-build-docker-action@8b2e3877c804a05a99eb1adaa38852b5f527286e
