@@ -9,10 +9,6 @@ jobs:
         uses: actions/checkout@master
       - name: Build native executable and upload it as an artifact
         uses: maxday/quarkus-native-build-docker-action@master
-      - name: Extract
-        run: |
-          id=$(docker create native-build-image)
-          docker cp $id:/usr/src/app/target/app-runner app-runner
       - name: Upload native executable
         uses: actions/upload-artifact@v1
         with:
@@ -31,12 +27,13 @@ jobs:
         with:
           name: native-executable
       - name: Dockerize
-        run: |
-          chmod u+x native-executable/app-runner
-          docker build . --file docker/dockerize/Dockerfile -t maxday/url-shortener
+        id: dockerize
+        uses: maxday/quarkus-dockerize-action@master
+        with:
+          tag: maxday/url-shortener
       - name: Login to DockerHub registry
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push docker image
         run: |
-          docker push maxday/url-shortener
+          docker push ${{ steps.dockerize.outputs.image }}
