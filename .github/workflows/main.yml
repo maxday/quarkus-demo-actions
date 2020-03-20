@@ -30,10 +30,14 @@ jobs:
         id: dockerize
         uses: maxday/quarkus-dockerize-action@master
         with:
-          tag: maxday/url-shortener
-      - name: Login to DockerHub registry
-        run: |
-          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-      - name: Push docker image
-        run: |
-          docker push ${{ steps.dockerize.outputs.image }}
+          tag: gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
+      - name: Login to GCP
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_email: ${{ secrets.GCP_EMAIL }}
+          service_account_key: ${{ secrets.GCP_ACCOUNT_KEY }}
+      - name: Configure Docker to use GCP
+        run: "gcloud auth configure-docker --quiet"
+      - name: Push image to GCP
+        run: docker push gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
+      
