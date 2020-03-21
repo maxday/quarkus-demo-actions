@@ -40,12 +40,12 @@ jobs:
           service_account_email: ${{ secrets.GCP_EMAIL }}
           service_account_key: ${{ secrets.GCP_ACCOUNT_KEY }}
       - name: Configure Docker to use GCP
-        run: "gcloud auth configure-docker --quiet && gcloud components install beta --quiet"
+        run: "gcloud auth configure-docker --quiet"
       - name: Push image to GCP
         run: docker push gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
       - name: Deploy 
         run: |
-          gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
+          gcloud components install beta --quiet && gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
           --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }} \
           --allow-unauthenticated \
           --region ${{ secrets.GCP_REGION }} \
