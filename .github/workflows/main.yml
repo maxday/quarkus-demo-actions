@@ -52,10 +52,10 @@ jobs:
           gcloud auth configure-docker --quiet &&  \
           gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
           --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }} \
-          --service-account ${{ secrets.GCP_ACCOUNT_KEY }}
           --platform ${{ secrets.GCP_PLATFORM }} \
           --allow-unauthenticated \
           --region ${{ secrets.GCP_REGION }} \
+          --service-account ${{ secrets.GCP_ACCOUNT_KEY }} \
           --set-env-vars DISABLE_SIGNAL_HANDLERS=1
           
       
