@@ -48,5 +48,6 @@ jobs:
       - name: Deploy 
         run: |
           gcloud components install beta --quiet  &&  \
+          gcloud auth configure-docker --quiet &&  \
           gcloud beta run deploy  demo-quarkus-api --image gcr.io/myeventpic/demo-quarkus-api --allow-unauthenticated --region us-central1 --set-env-vars DISABLE_SIGNAL_HANDLERS=1 --platform managed
       
