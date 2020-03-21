@@ -48,6 +48,9 @@ jobs:
         run: docker push gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
       - name: Deploy 
         run: |
+          ls -la
+          ls -la .docker
+          ls -ls .gcloud
           gcloud components install beta --quiet  &&  \
           gcloud auth configure-docker --quiet &&  \
           gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
