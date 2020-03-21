@@ -48,9 +48,8 @@ jobs:
           gcloud components install beta --quiet  &&  \
           gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
           --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }} \
+          --platform ${{ secrets.GCP_PLATFORM }} \
           --allow-unauthenticated \
           --region ${{ secrets.GCP_REGION }} \
-          --set-env-vars DISABLE_SIGNAL_HANDLERS=1 \
-          --platform ${{ secrets.GCP_PLATFORM }}
-          --project ${{ secrets.GCP_PROJECT }}
+          --set-env-vars DISABLE_SIGNAL_HANDLERS=1
       
