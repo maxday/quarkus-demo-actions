@@ -45,7 +45,9 @@ jobs:
         run: docker push gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
       - name: Deploy 
         run: |
-          gcloud components install beta --quiet && gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
+          gcloud components install beta --quiet  &&  \
+          gcloud components update --quiet &&  \
+          gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
           --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }} \
           --allow-unauthenticated \
           --region ${{ secrets.GCP_REGION }} \
