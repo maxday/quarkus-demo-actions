@@ -49,9 +49,9 @@ jobs:
       - name: Deploy 
         run: |
           ls -la
-          cat *-*-*
+          env | grep GOOGLE_APPLICATION_CREDENTIALS
           gcloud components install beta --quiet  &&  \
-          gcloud auth configure-docker --quiet &&  \
+          env | grep GOOGLE_APPLICATION_CREDENTIALS
           gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
           --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }} \
           --platform ${{ secrets.GCP_PLATFORM }} \
