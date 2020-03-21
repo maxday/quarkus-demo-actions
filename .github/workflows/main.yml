@@ -13,7 +13,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: native-executable
-          path: app-runnerXXX
+          path: xxx-app-runner
 
   dockerize:
     runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ jobs:
         with:
           tag: gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
           dockerfilePath: Dockerfile
-          executablePath: native-executable/app-runnerXXX
+          executablePath: native-executable/xxx-app-runner
       - name: Login to GCP
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
