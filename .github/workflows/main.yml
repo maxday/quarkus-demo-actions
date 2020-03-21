@@ -5,14 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Build native Quarkus app
     steps:
-      #- name: Checkout the code
-      #  uses: actions/checkout@master
-      #- name: Build native executable and upload it as an artifact
-      #  uses: maxday/quarkus-native-build-docker-action@1
-      #  with:
-      #    outputName: xxx-app-runner
-      - name: fakeBuild
+      - name: Checkout the code
+        uses: actions/checkout@master
+      - name: Build native executable and upload it as an artifact
         run: echo coucou >> xxx-app-runner
+        #uses: maxday/quarkus-native-build-docker-action@1
+        #with:
+          #outputName: xxx-app-runner
       - name: Upload native executable
         uses: actions/upload-artifact@v1
         with:
@@ -41,15 +40,18 @@ jobs:
         with:
           service_account_email: ${{ secrets.GCP_EMAIL }}
           service_account_key: ${{ secrets.GCP_ACCOUNT_KEY }}
+          project_id: myeventpic
       - name: Configure Docker to use GCP
         run: "gcloud auth configure-docker --quiet"
       - name: Push image to GCP
         run: docker push gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
-      - name: Deploy service to Cloud Run
-        uses: stefda/action-cloud-run@1.0.0
-        with:
-          image: gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
-          service: demo-quarkus-api
-          project: myeventpic
-          region: us-central
-          service key: ${{ secrets.GCP_ACCOUNT_KEY }}
+      - name: Deploy 
+        run: |
+          gcloud components install beta --quiet  &&  \
+          gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
+          --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }} \
+          --platform ${{ secrets.GCP_PLATFORM }} \
+          --allow-unauthenticated \
+          --region ${{ secrets.GCP_REGION }} \
+          --set-env-vars DISABLE_SIGNAL_HANDLERS=1
+      
