@@ -8,7 +8,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@master
       - name: Build native executable and upload it as an artifact
-        uses: maxday/quarkus-native-build-docker-action@de3a5149ae3a2f3dbc4ff4ebe988c02826456e6b
+        uses: maxday/quarkus-native-build-docker-action@1
         with:
           outputName: xxx-app-runner
       - name: Upload native executable
@@ -43,4 +43,11 @@ jobs:
         run: "gcloud auth configure-docker --quiet"
       - name: Push image to GCP
         run: docker push gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
+      - name: Deploy 
+        run: gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
+        --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }} 
+        --allow-unauthenticated 
+        --region ${{ secrets.GCP_REGION }}
+        --set-env-vars DISABLE_SIGNAL_HANDLERS=1 
+        --platform ${{ secrets.GCP_PLATFORM }}
       
