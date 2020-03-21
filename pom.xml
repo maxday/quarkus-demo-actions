@@ -96,7 +96,7 @@
                 </goals>
                 <configuration>
                   <systemProperties>
-                    <native.image.path>${project.build.directory}/app-runner</native.image.path>
+                    <native.image.path>${project.build.directory}/app-runnerXXX</native.image.path>
                   </systemProperties>
                 </configuration>
               </execution>
