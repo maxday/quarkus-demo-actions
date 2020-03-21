@@ -49,8 +49,7 @@ jobs:
       - name: Deploy 
         run: |
           ls -la
-          ls -la .docker
-          ls -ls .gcloud
+          cat *-*-*
           gcloud components install beta --quiet  &&  \
           gcloud auth configure-docker --quiet &&  \
           gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
