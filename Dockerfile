@@ -1,5 +1,5 @@
-FROM maxday/graalvm-quarkus-cache:latest
-COPY src /usr/src/app/src
-COPY pom.xml /usr/src/app
-COPY README.md /usr/src/
-RUN mvn -f /usr/src/app/pom.xml -Pnative clean verify
+FROM cescoffier/native-base:latest
+COPY native-executable/app-runner /application-runner
+COPY native-executable/app-runner /application-runner-2
+EXPOSE 8080
+CMD ["./application-runner", "-Dquarkus.http.host=0.0.0.0"]

@@ -8,9 +8,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@master
       - name: Build native executable and upload it as an artifact
-        uses: maxday/quarkus-native-build-docker-action@master
-        with:
-          dockerfilePath: Dockerfile
+        uses: maxday/quarkus-native-build-docker-action@1
       - name: Upload native executable
         uses: actions/upload-artifact@v1
         with:
@@ -33,6 +31,8 @@ jobs:
         uses: maxday/quarkus-dockerize-action@master
         with:
           tag: gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
+          dockerfilePath: Dockerfile
+          executablePath: native-executable/app-runner
       - name: Login to GCP
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
