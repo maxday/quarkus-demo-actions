@@ -40,7 +40,7 @@ jobs:
         with:
           service_account_email: ${{ secrets.GCP_EMAIL }}
           service_account_key: ${{ secrets.GCP_ACCOUNT_KEY }}
-          project_id: myeventpic
+          project_id: ${{ secrets.GCP_PROJECT }}
       - name: Configure Docker to use GCP
         run: "gcloud auth configure-docker --quiet"
       - name: Push image to GCP
