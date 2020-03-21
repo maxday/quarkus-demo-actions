@@ -48,7 +48,7 @@ jobs:
       - name: Deploy 
         run: |
           gcloud components install beta --quiet
-          gcloud beta run deploy ${{ secrets.GCP_SERVICE_NAME }} \
+          gcloud beta run deploy ${{ secrets.GCP_APP_NAME }} \
           --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }} \
           --platform ${{ secrets.GCP_PLATFORM }} \
           --allow-unauthenticated --service-account ${{ secrets.GCP_EMAIL }} \
