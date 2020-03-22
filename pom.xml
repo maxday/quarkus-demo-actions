@@ -46,7 +46,7 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>xxx-app</finalName>
+    <finalName>quarkus-demo-actions</finalName>
     <plugins>
       <plugin>
         <groupId>io.quarkus</groupId>
