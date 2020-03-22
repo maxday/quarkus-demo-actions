@@ -8,7 +8,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@master
       - name: Build native executable and upload it as an artifact
-        uses: maxday/quarkus-native-build-docker-action@1
+        uses: maxday/quarkus-native-build-docker-action@2
         with:
           outputName: xxx-app-runner
       - name: Upload native executable
