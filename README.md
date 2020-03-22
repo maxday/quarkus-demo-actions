@@ -1,1 +1,1 @@
-# url-shortener project
+quarkus-demo-actions project

@@ -1,4 +1,4 @@
-package io.maximedavid.shortener;
+package io.github.maxday;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-public class HelloResourceTest {
+public class GreetingResourceTest {
 
     @Test
     public void testHelloEndpoint() {
@@ -15,7 +15,7 @@ public class HelloResourceTest {
           .when().get("/hello")
           .then()
              .statusCode(200)
-             .body(is("hello!!!"));
+             .body(is("hello"));
     }
 
 }
