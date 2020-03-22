@@ -33,7 +33,7 @@ jobs:
         uses: maxday/quarkus-dockerize-action@master
         with:
           tag: gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}
-          executablePath: native-executable/xxx-app-runner
+          executablePath: native-executable/app-runner
       - name: Login to GCP
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
@@ -50,7 +50,7 @@ jobs:
           gcloud components install beta --quiet
           gcloud beta run deploy ${{ secrets.GCP_APP_NAME }} \
           --image gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }} \
-          --platform ${{ secrets.GCP_PLATFORM }} \
+          --platform managed \
           --allow-unauthenticated --service-account ${{ secrets.GCP_EMAIL }} \
           --region ${{ secrets.GCP_REGION }} \
           --set-env-vars DISABLE_SIGNAL_HANDLERS=1
