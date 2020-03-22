@@ -7,15 +7,15 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@master
-      - name: Build native executable and upload it as an artifact
-        uses: maxday/quarkus-native-build-docker-action@a77c59edfe134cf9694bd3520776b359d9360781
+      - name: Build native executable
+        uses: maxday/quarkus-native-build-docker-action@1
         with:
-          outputName: xxx-app-runner
+          outputName: app-runner
       - name: Upload native executable
         uses: actions/upload-artifact@v1
         with:
           name: native-executable
-          path: xxx-app-runner
+          path: app-runner
 
   dockerize:
     runs-on: ubuntu-latest
