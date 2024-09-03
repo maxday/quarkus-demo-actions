@@ -25,7 +25,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@master
       - name: Download the binary
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4.1.7
         with:
           name: native-executable
       - name: Dockerize
